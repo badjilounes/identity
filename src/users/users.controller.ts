@@ -39,24 +39,6 @@ export class UsersController {
     }
 
     @UseGuards(AuthGuard('auth'))
-    @Get('patients')
-    @ApiResponse({ status: 201, description: 'Patients found', type: UserDto, isArray: true})
-    @ApiResponse({ status: 401, description: 'User not authentificated'})
-    async getPatients(): Promise<UserDto[]> {
-        const patients: User[] = await this.service.getPatients();
-        return this.userDtoConverter.convertOutboundCollection(patients);
-    }
-
-    @UseGuards(AuthGuard('auth'))
-    @Get('doctors')
-    @ApiResponse({ status: 201, description: 'Doctors found', type: UserDto, isArray: true})
-    @ApiResponse({ status: 401, description: 'User not authentificated'})
-    async getDoctors(): Promise<UserDto[]> {
-        const doctors: User[] = await this.service.getDoctors();
-        return this.userDtoConverter.convertOutboundCollection(doctors);
-    }
-
-    @UseGuards(AuthGuard('auth'))
     @Get(':id')
     @ApiImplicitParam({name: 'id', description: 'User id to retrieve', required: true, type: Number})
     @ApiResponse({ status: 201, description: 'User found', type: UserDto})

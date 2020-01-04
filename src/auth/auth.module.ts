@@ -8,10 +8,7 @@ import { AuthStrategy } from './strategy/auth.strategy';
 
 @Module({
   imports: [
-    //On inject ici le module UsersModule qui nous permettra d'utiliser tous les services qu'il a exporté
-    //UsersService, CreateUserDtoConverter, UpdateUserDtoConverter, UserDtoConverter, etc ...
     UsersModule, 
-    //On inject le module JwtModule comme préconisé sur la doc NestJs
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: jwtConstants.expiresIn },

@@ -1,7 +1,6 @@
 import { ApiModelProperty } from "@nestjs/swagger";
 import { IsEmail, IsEnum, IsOptional, IsString } from "class-validator";
 import { GenderEnum } from "../../common/gender.enum";
-import { RoleEnum } from "../../common/role.enum";
 
 export class CreateUserDto {
 
@@ -25,10 +24,6 @@ export class CreateUserDto {
     @ApiModelProperty()
     @IsString()
     address: string;
-
-    @ApiModelProperty({enum: Object.keys(RoleEnum).filter((v) => isNaN(+v))})
-    @IsEnum(Object.keys(RoleEnum).filter((v) => isNaN(+v)))
-    role: string;
 
     @ApiModelProperty({enum: Object.keys(GenderEnum).filter((v) => isNaN(+v))})
     @IsEnum(Object.keys(GenderEnum).filter((v) => isNaN(+v)))

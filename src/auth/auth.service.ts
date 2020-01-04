@@ -7,12 +7,6 @@ import { UserDtoConverter } from '../users/converter/userDto.converter';
 
 @Injectable()
 export class AuthService {
-    /**
-     * 
-     * @param userService service qui permet de faire toutes les opérations relatives à la table User
-     * @param jwtService service qui permet de profiter le bibliothèque Jwt
-     * @param userDtoConverter service qui permet de convertir un User en UserDto (et inversement) 
-     */
     constructor(
         private readonly userService: UsersService, 
         private readonly jwtService: JwtService,
@@ -20,30 +14,27 @@ export class AuthService {
     ) {}
 
     /**
-     * Vérifie l'email et le mot de passe de l'utilisateur et renvoie le jeton de connexion de l'utilisateur.
-     * Ce jeton contient une chaîne de caractères qui correspond aux informations de l'utilisateur.
      * 
-     * @param { string } email email de l'utilisateur
-     * @param { string } password mot de passe de l'utilisateur
-     * @returns { {access_token: string;} } jeton utilisateur
+     * @param { string } email 
+     * @param { string } password 
+     * @returns { {access_token: string;} }
      */
     async login(email: string, password: string): Promise<{access_token: string}> {
-        const user: UserDto = this.userDtoConverter.convertOutbound( //Converti un User en UserDto
-            await this.userService.checkUserCredentials(email, password) //Appel de la méthode qui permet de vérifier les informations d'un utilisateur
+        const user: UserDto = this.userDtoConverter.convertOutbound( 
+            await this.userService.checkUserCredentials(email, password)
         );
             
         return {
-            access_token: this.jwtService.sign(user) //Assigne à la clef access_token les informations de l'utilisateur encryptées
+            access_token: this.jwtService.sign(user)
         };
     }
 
     /**
-     * Valide un utilisateur à aprtir de son id
      * 
-     * @param userId id utilisateur
-     * @returns {User} Utilisateur correspondant 
+     * @param userId 
+     * @returns {User} 
      */
     async validate(userId: number): Promise<User> {
-        return await this.userService.getUserById(userId); //Récupère un utilisateur à partir de son id
+        return await this.userService.getUserById(userId);
     }
 }

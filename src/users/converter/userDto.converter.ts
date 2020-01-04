@@ -1,8 +1,7 @@
+import { Converter } from '../../common/converter';
+import { GenderEnum } from '../../common/gender.enum';
 import { UserDto } from '../model/user.dto';
 import { User } from '../user.entity';
-import { Converter } from '../../common/converter';
-import { RoleEnum } from '../../common/role.enum';
-import { GenderEnum } from '../../common/gender.enum';
 
 export class UserDtoConverter implements Converter<UserDto, User>{
     constructor() {}
@@ -15,12 +14,7 @@ export class UserDtoConverter implements Converter<UserDto, User>{
             firstName: user.firstName,
             lastName: user.lastName,
             gender: GenderEnum[user.gender],
-            role: RoleEnum[user.role],
         };
-
-        if (user.role === RoleEnum.Patient) {
-            userDto['doctors'] = user.doctors.map(d => d.id);
-        }
 
         return userDto;
     }
